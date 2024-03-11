@@ -1,96 +1,34 @@
-import { Leon, Lobo, Oso, Serpiente, Aguila } from './clases.js'
-
-
-const patronazo = (() => {
-
-
-
-    return {
-        datosJSON: async (especie) => {
-            const path = '../../animales.json';
-            try {
-                const response = await fetch(path);
-                const data = await response.json();
-                // console.log(data)
-                const salida = data.animales.filter((animal) => animal.name == especie)
-                // console.log(salida[0])
-
-                return salida[0]
-
-
-
-            } catch (err) {
-                alert(err);
-            }
-        }
-    }
-})();
-
-
-
-
-let selectAnimal = document.getElementById('animal')
-
-selectAnimal.addEventListener('change', function () {
-    let imagenFormulario = document.getElementById('preview');
-    imagenFormulario.style.backgroundImage = "none";
-    if (selectAnimal.value == 'Leon' || selectAnimal.value == 'Aguila') {
-        imagenFormulario.innerHTML = `<img src="assets/imgs/${selectAnimal.value}.png" alt="" style="max-width: 100%; max-height: 100%;"></img>`
-    } else {
-        imagenFormulario.innerHTML = `<img src="assets/imgs/${selectAnimal.value}.jpg" alt="" style="max-width: 100%; max-height: 100%;"></img>`
-    }
-})
+import { patronazo, imgDinamica, intaciarClase } from './funciones.js';
 
 let btnAgregar = document.getElementById('btnRegistrar');
 let selectEdad = document.getElementById('edad')
 let textareaComentarios = document.getElementById('comentarios')
 let lienzo = document.getElementById('Animales')
 
-let agregados;
-let modalImg
-let modalEdad
-let modalComentario
+imgDinamica();
 
 btnAgregar.addEventListener('click', async function () {
+    let selectAnimal = document.getElementById('animal')
     let nombre = selectAnimal.value;
     let edad = selectEdad.value;
     let comentarios = textareaComentarios.value;
     let json = await patronazo.datosJSON(nombre)
     let img = json.imagen
     let sound = json.sonido
-    let animalillo;
-    switch (nombre) {
-        case "Leon":
-            animalillo = new Leon(nombre, edad, img, comentarios, sound)
-            break;
-        case "Lobo":
-            animalillo = new Lobo(nombre, edad, img, comentarios, sound)
-            break;
-
-        case "Serpiente":
-            animalillo = new Serpiente(nombre, edad, img, comentarios, sound)
-            break;
-
-        case "Oso":
-            animalillo = new Oso(nombre, edad, img, comentarios, sound)
-            break;
-        case "Aguila":
-            animalillo = new Aguila(nombre, edad, img, comentarios, sound)
-            break;
-    }
-    lienzo.innerHTML += `<div class="card" style="width: 10rem;">
+    let animalillo = intaciarClase(nombre, edad, img, comentarios, sound);
+    lienzo.innerHTML += `<div class="card tarjeta m-2">
     <button id="animal${animalillo.id}" edad="${animalillo.edad}" comentario="${animalillo.comentarios}" class="btnModal"><img src="assets/imgs/${animalillo.img}" class="card-img-top" >
     </button>
-    <button id="sonido${animalillo.nombre}" style="background-color: gray;"><img src="assets/imgs/audio.svg" style="max-width: 25%;" ;"></button>
+    <button id="sonido${animalillo.id}" class="sonido" sonido="${animalillo.sonido}" style="background-color: gray;"><img src="assets/imgs/audio.svg" style="max-width: 15%;"></button>
   </div>`
 
-    agregados = document.querySelectorAll('.btnModal')
-    console.log(agregados)
+    let agregados = document.querySelectorAll('.btnModal')
 
 
-    modalImg = document.getElementById('imagenModal')
-    modalEdad = document.getElementById('edadModal')
-    modalComentario = document.getElementById('textComentario')
+
+    let modalImg = document.getElementById('imagenModal')
+    let modalEdad = document.getElementById('edadModal')
+    let modalComentario = document.getElementById('textComentario')
 
     agregados.forEach(function (agregado) {
         agregado.addEventListener('click', function () {
@@ -105,6 +43,23 @@ btnAgregar.addEventListener('click', async function () {
             modal.show();
         })
     })
+
+
+
+    let sonidos = document.querySelectorAll('.sonido')
+    sonidos.forEach(function (sonido) {
+        sonido.addEventListener('click', function () {
+            let audio = document.getElementById('player');
+            console.log(sonido);
+            let source = document.querySelector('source')
+            source.setAttribute('src', `assets/sounds/${sonido.getAttribute('sonido')}`)
+            // audio.innerHTML = `<source src="assets/sounds/${sonido.getAttribute('sonido')}" type="audio/mpeg"></source>`
+            console.log(audio);
+            audio.load();
+            audio.play();
+        })
+    })
+
 
 })
 
