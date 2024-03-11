@@ -12,9 +12,9 @@ btnAgregar.addEventListener('click', async function () {
     let nombre = selectAnimal.value;
     let edad = selectEdad.value;
     let comentarios = textareaComentarios.value;
-    let json = await patronazo.datosJSON(nombre)
-    let img = json.imagen
-    let sound = json.sonido
+    let datosAnimales = await patronazo.datosJSON(nombre)
+    let img = datosAnimales.imagen
+    let sound = datosAnimales.sonido
     let animalillo = intaciarClase(nombre, edad, img, comentarios, sound);
     lienzo.innerHTML += `<div class="card tarjeta m-2">
     <button id="animal${animalillo.id}" edad="${animalillo.edad}" comentario="${animalillo.comentarios}" class="btnModal"><img src="assets/imgs/${animalillo.img}" class="card-img-top" >
