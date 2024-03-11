@@ -65,4 +65,34 @@ function intaciarClase(tipo, edad, img, comentarios, sound) {
 
 }
 
-export { patronazo, imgDinamica, intaciarClase };
+function camposCompletos() {
+    let tipoAnimal = document.getElementById('animal')
+    let edadAnimal = document.getElementById('edad')
+    let comentario = document.getElementById('comentarios')
+    let faltas = []
+    if (tipoAnimal.value == "Seleccione un animal") {
+        faltas.push('Nombre del animal')
+    }
+    if (edadAnimal.value == "Seleccione un rango de años") {
+        faltas.push('Edad')
+    }
+    if (comentario.value == "") {
+        faltas.push('Comentario')
+    }
+    if (faltas.length == 0) {
+        return false;
+    } else {
+        return faltas;
+    }
+
+}
+
+function restaurarFormulario() {
+    document.getElementById('edad').selectedIndex = 0
+    document.getElementById('animal').selectedIndex = 0
+    document.getElementById('comentarios').value = ""
+    let imagen = document.getElementById('preview')
+    imagen.innerHTML = ""
+    imagen.style.backgroundImage = "url(assets/imgs/lion.svg)";
+}
+export { patronazo, imgDinamica, intaciarClase, camposCompletos, restaurarFormulario };
