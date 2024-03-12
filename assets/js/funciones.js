@@ -95,4 +95,31 @@ function restaurarFormulario() {
     imagen.innerHTML = ""
     imagen.style.backgroundImage = "url(assets/imgs/lion.svg)";
 }
-export { patronazo, imgDinamica, intaciarClase, camposCompletos, restaurarFormulario };
+
+function buscarMetodoSonido(instancia) {
+    let metodo;
+    switch (instancia.nombre) {
+        case "Leon":
+            metodo = instancia.rugir
+            break;
+        case "Lobo":
+            metodo = instancia.aullar
+            break;
+
+        case "Serpiente":
+            metodo = instancia.sisear
+            break;
+
+        case "Oso":
+            metodo = instancia.grunir
+            break;
+        case "Aguila":
+            metodo = instancia.chillar
+            break;
+    }
+    return metodo;
+
+}
+
+
+export { patronazo, imgDinamica, intaciarClase, camposCompletos, restaurarFormulario, buscarMetodoSonido };

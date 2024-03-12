@@ -30,28 +30,48 @@ class Animal {
 }
 
 class Leon extends Animal {
-    rugir() {
-
+    rugir(ruido) {
+        let audio = document.getElementById('player');
+        let source = document.querySelector('source')
+        source.setAttribute('src', `assets/sounds/${ruido}`)
+        audio.load();
+        audio.play();
     }
 }
 class Lobo extends Animal {
-    aullar() {
-
+    aullar(ruido) {
+        let audio = document.getElementById('player');
+        let source = document.querySelector('source')
+        source.setAttribute('src', `assets/sounds/${ruido}`)
+        audio.load();
+        audio.play();
     }
 }
 class Oso extends Animal {
-    gruñir() {
-
+    grunir(ruido) {
+        let audio = document.getElementById('player');
+        let source = document.querySelector('source')
+        source.setAttribute('src', `assets/sounds/${ruido}`)
+        audio.load();
+        audio.play();
     }
 }
 class Serpiente extends Animal {
-    sisear() {
-
+    sisear(ruido) {
+        let audio = document.getElementById('player');
+        let source = document.querySelector('source')
+        source.setAttribute('src', `assets/sounds/${ruido}`)
+        audio.load();
+        audio.play();
     }
 }
 class Aguila extends Animal {
-    chillar() {
-
+    chillar(ruido) {
+        let audio = document.getElementById('player');
+        let source = document.querySelector('source')
+        source.setAttribute('src', `assets/sounds/${ruido}`)
+        audio.load();
+        audio.play();
     }
 }
 

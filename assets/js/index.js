@@ -1,4 +1,4 @@
-import { patronazo, imgDinamica, intaciarClase, camposCompletos, restaurarFormulario } from './funciones.js';
+import { patronazo, imgDinamica, intaciarClase, camposCompletos, restaurarFormulario, buscarMetodoSonido } from './funciones.js';
 
 let btnAgregar = document.getElementById('btnRegistrar');
 let selectEdad = document.getElementById('edad')
@@ -6,7 +6,7 @@ let textareaComentarios = document.getElementById('comentarios')
 let lienzo = document.getElementById('Animales')
 
 imgDinamica();
-
+let animalesInstanciados = []
 btnAgregar.addEventListener('click', async function () {
     try {
         if (!camposCompletos()) {
@@ -18,10 +18,11 @@ btnAgregar.addEventListener('click', async function () {
             let img = datosAnimales.imagen
             let sound = datosAnimales.sonido
             let animalillo = intaciarClase(nombre, edad, img, comentarios, sound);
+            animalesInstanciados.push(animalillo)
             lienzo.innerHTML += `<div class="card tarjeta m-2">
         <button id="animal${animalillo.id}" edad="${animalillo.edad}" comentario="${animalillo.comentarios}" class="btnModal"><img src="assets/imgs/${animalillo.img}" class="card-img-top" >
         </button>
-        <button id="sonido${animalillo.id}" class="sonido" sonido="${animalillo.sonido}" style="background-color: gray;"><img src="assets/imgs/audio.svg" style="max-width: 15%;"></button>
+        <button instancia="${animalillo.id}" class="sonido" sonido="${animalillo.sonido}" style="background-color: gray;"><img src="assets/imgs/audio.svg" style="max-width: 15%;"></button>
       </div>`
 
             let agregados = document.querySelectorAll('.btnModal')
@@ -40,8 +41,6 @@ btnAgregar.addEventListener('click', async function () {
                     modalComentario.innerHTML = agregado.getAttribute('comentario')
 
                     let modal = new bootstrap.Modal(document.getElementById('exampleModal1'));
-
-                    // Mostrar el modal
                     modal.show();
                 })
             })
@@ -51,14 +50,9 @@ btnAgregar.addEventListener('click', async function () {
             let sonidos = document.querySelectorAll('.sonido')
             sonidos.forEach(function (sonido) {
                 sonido.addEventListener('click', function () {
-                    let audio = document.getElementById('player');
-                    console.log(sonido);
-                    let source = document.querySelector('source')
-                    source.setAttribute('src', `assets/sounds/${sonido.getAttribute('sonido')}`)
-                    // audio.innerHTML = `<source src="assets/sounds/${sonido.getAttribute('sonido')}" type="audio/mpeg"></source>`
-                    console.log(audio);
-                    audio.load();
-                    audio.play();
+                    let instaciado = animalesInstanciados[Number(sonido.getAttribute('instancia')) - 1]
+                    let ruidoAnimal = buscarMetodoSonido(instaciado)
+                    ruidoAnimal(instaciado.sonido)
                 })
             })
             restaurarFormulario()
