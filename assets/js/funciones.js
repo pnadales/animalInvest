@@ -6,7 +6,7 @@ const patronazo = (() => {
 
     return {
         datosJSON: async (especie) => {
-            const path = '../../animales.json';
+            const path = 'animales.json';
             try {
                 const response = await fetch(path);
                 const data = await response.json();
